@@ -16,10 +16,13 @@ stopdb:
 removedb:
 	docker rm mysqldb -f
 
+startdb:
+	docker start mysqldb
+
 migrateup:
-	migrate -path db/migrations -database "mysql://root:bankapi18@tcp(localhost:5432)/bankdb" -verbose up
+	migrate -path migrations -database "mysql://root:bankapi18@tcp(localhost:5432)/bankdb" -verbose up
 
 migratedown:
-	migrate -path db/migrations -database "mysql://root:bankapi18@tcp(localhost:5432)/bankdb" -verbose down
+	migrate -path migrations -database "mysql://root:bankapi18@tcp(localhost:5432)/bankdb" -verbose down
 
-.PHONY: mysqldb createdb dropdb
+.PHONY: mysqldb createdb dropdb migrateup migratedown
