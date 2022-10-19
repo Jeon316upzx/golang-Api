@@ -10,7 +10,7 @@ import (
 	"database/sql"
 )
 
-const createOwnerDetails = `-- name: CreateOwnerDetails :exec
+const createOwnerDetails = `-- name: CreateOwnerDetails :execresult
 INSERT INTO owner_details (
   name,
   age
@@ -24,16 +24,14 @@ type CreateOwnerDetailsParams struct {
 	Age  sql.NullInt32 `json:"age"`
 }
 
-func (q *Queries) CreateOwnerDetails(ctx context.Context, arg CreateOwnerDetailsParams) error {
-	_, err := q.db.ExecContext(ctx, createOwnerDetails, arg.Name, arg.Age)
-	return err
+func (q *Queries) CreateOwnerDetails(ctx context.Context, arg CreateOwnerDetailsParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createOwnerDetails, arg.Name, arg.Age)
 }
 
-const getOwner = `-- name: GetOwner :exec
+const getOwner = `-- name: GetOwner :execresult
 SELECT id, name, age, image, country FROM owner_details WHERE name = ? LIMIT 1
 `
 
-func (q *Queries) GetOwner(ctx context.Context, name string) error {
-	_, err := q.db.ExecContext(ctx, getOwner, name)
-	return err
+func (q *Queries) GetOwner(ctx context.Context, name string) (sql.Result, error) {
+	return q.db.ExecContext(ctx, getOwner, name)
 }
