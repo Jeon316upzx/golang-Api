@@ -25,4 +25,7 @@ migrateup:
 migratedown:
 	migrate -path migrations -database "mysql://root:bankapi18@tcp(localhost:5432)/bankdb" -verbose down
 
-.PHONY: mysqldb createdb dropdb migrateup migratedown
+sqlc:
+	sqlc generate
+	
+.PHONY: mysqldb createdb dropdb migrateup migratedown sqlc
