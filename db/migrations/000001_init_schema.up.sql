@@ -7,7 +7,7 @@ CREATE TABLE `accounts` (
 
 CREATE TABLE `owner` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `owner_details` int NOT NULL
 );
 

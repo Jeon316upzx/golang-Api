@@ -12,7 +12,7 @@ import (
 func TestCreateOwner(t *testing.T) {
 	t.Log("NO EXISTING DETAILS FOUND")
 	argsDetail := CreateOwnerDetailsParams{
-		Name: "Jeon",
+		Name: "Ifeanyi",
 		Age:  sql.NullInt32{Int32: 23, Valid: true},
 	}
 
