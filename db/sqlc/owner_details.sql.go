@@ -28,10 +28,19 @@ func (q *Queries) CreateOwnerDetails(ctx context.Context, arg CreateOwnerDetails
 	return q.db.ExecContext(ctx, createOwnerDetails, arg.Name, arg.Age)
 }
 
-const getOwner = `-- name: GetOwner :execresult
+const getOwner = `-- name: GetOwner :one
 SELECT id, name, age, image, country FROM owner_details WHERE name = ? LIMIT 1
 `
 
-func (q *Queries) GetOwner(ctx context.Context, name string) (sql.Result, error) {
-	return q.db.ExecContext(ctx, getOwner, name)
+func (q *Queries) GetOwner(ctx context.Context, name string) (OwnerDetail, error) {
+	row := q.db.QueryRowContext(ctx, getOwner, name)
+	var i OwnerDetail
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Age,
+		&i.Image,
+		&i.Country,
+	)
+	return i, err
 }

@@ -3,7 +3,6 @@ package bankdb
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"testing"
 
@@ -11,22 +10,26 @@ import (
 )
 
 func TestCreateOwner(t *testing.T) {
+	t.Log("NO EXISTING DETAILS FOUND")
 	argsDetail := CreateOwnerDetailsParams{
-		Name: "Ifeanyi",
-		Age:  sql.NullInt32{Int32: 20, Valid: true},
+		Name: "Jeon",
+		Age:  sql.NullInt32{Int32: 23, Valid: true},
 	}
 
-	details, err := testQueries.GetOwner(context.Background(), argsDetail.Name)
-	fmt.Println(details)
-	t.Log(details)
-	require.NoError(t, err)
-	require.NotEmpty(t, details)
+	details, _ := testQueries.GetOwner(context.Background(), argsDetail.Name)
+	require.Empty(t, details)
+
+	newOwnerDetails, err := testQueries.CreateOwnerDetails(context.Background(), argsDetail)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	t.Log(details)
-
-	// result, err := testQueries.CreateOwner(context.Background())
+	id, err := newOwnerDetails.LastInsertId()
+	t.Log("CREATED NEW DETAILS")
+	t.Log("DETAILS ID NEWLY INSERTED", id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	result, _ := testQueries.CreateOwner(context.Background(), int32(id))
+	require.NotEmpty(t, result)
 
 }

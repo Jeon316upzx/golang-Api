@@ -6,5 +6,5 @@ INSERT INTO owner_details (
   ?,?
 );
 
--- name: GetOwner :execresult
+-- name: GetOwner :one
 SELECT * FROM owner_details WHERE name = ? LIMIT 1;
