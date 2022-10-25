@@ -21,3 +21,14 @@ INSERT INTO owner (
 func (q *Queries) CreateOwner(ctx context.Context, ownerDetails int32) (sql.Result, error) {
 	return q.db.ExecContext(ctx, createOwner, ownerDetails)
 }
+
+const getProfile = `-- name: GetProfile :one
+SELECT id, created_at, owner_details FROM owner WHERE owner_details = ?
+`
+
+func (q *Queries) GetProfile(ctx context.Context, ownerDetails int32) (Owner, error) {
+	row := q.db.QueryRowContext(ctx, getProfile, ownerDetails)
+	var i Owner
+	err := row.Scan(&i.ID, &i.CreatedAt, &i.OwnerDetails)
+	return i, err
+}

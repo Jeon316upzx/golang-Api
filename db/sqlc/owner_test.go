@@ -1,6 +1,7 @@
 package bankdb
 
 import (
+	"bankapi/db/util"
 	"context"
 	"database/sql"
 	"log"
@@ -12,8 +13,8 @@ import (
 func TestCreateOwner(t *testing.T) {
 	t.Log("NO EXISTING DETAILS FOUND")
 	argsDetail := CreateOwnerDetailsParams{
-		Name: "Ifeanyi",
-		Age:  sql.NullInt32{Int32: 23, Valid: true},
+		Name: util.RandomName(6),
+		Age:  sql.NullInt32{Int32: util.RandomAge(10, 40), Valid: true},
 	}
 
 	details, _ := testQueries.GetOwner(context.Background(), argsDetail.Name)

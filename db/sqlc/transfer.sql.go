@@ -24,12 +24,21 @@ func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) 
 	return q.db.ExecContext(ctx, createTransfer, arg.Amount, arg.ToAccount, arg.FromAccount)
 }
 
-const getTransfer = `-- name: GetTransfer :execresult
-SELECT id, amount, to_account, from_account, created_at FROM transfer WHERE id = ?
+const getTransfer = `-- name: GetTransfer :one
+SELECT id, amount, to_account, from_account, created_at FROM transfer WHERE id = ? LIMIT 1
 `
 
-func (q *Queries) GetTransfer(ctx context.Context, id int32) (sql.Result, error) {
-	return q.db.ExecContext(ctx, getTransfer, id)
+func (q *Queries) GetTransfer(ctx context.Context, id int32) (Transfer, error) {
+	row := q.db.QueryRowContext(ctx, getTransfer, id)
+	var i Transfer
+	err := row.Scan(
+		&i.ID,
+		&i.Amount,
+		&i.ToAccount,
+		&i.FromAccount,
+		&i.CreatedAt,
+	)
+	return i, err
 }
 
 const getTransferFrom = `-- name: GetTransferFrom :many

@@ -7,5 +7,5 @@ SELECT * FROM transactions;
 -- name: GetTransactionBy :many
 SELECT * FROM transactions WHERE account = ?;
 
--- name: GetTransaction :execresult
+-- name: GetTransaction :one
 SELECT * FROM transactions WHERE id = ? LIMIT 1;

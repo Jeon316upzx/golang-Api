@@ -5,4 +5,7 @@ INSERT INTO owner (
   ?
 );
 
+-- name: GetProfile :one
+SELECT * FROM owner WHERE owner_details = ?;
+
 

@@ -27,7 +27,7 @@ func RandomString(n int) string {
 	return name.String()
 }
 
-func RandomOwner(n int) string {
+func RandomName(n int) string {
 	return RandomString(n)
 }
 
@@ -37,4 +37,9 @@ func RandomAmount(min, max int32) int32 {
 
 func RandomAge(min, max int32) int32 {
 	return RandomInt(min, max)
+}
+
+func RandomCurrency() string {
+	currs := []string{"EUR", "USD", "NGN"}
+	return currs[rand.Intn(len(currs))]
 }

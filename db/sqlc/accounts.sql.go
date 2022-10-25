@@ -56,6 +56,22 @@ func (q *Queries) GetAccount(ctx context.Context, owner sql.NullInt32) ([]Accoun
 	return items, nil
 }
 
+const getAccountById = `-- name: GetAccountById :one
+SELECT id, balance, currency, owner FROM accounts WHERE owner = ? LIMIT 1
+`
+
+func (q *Queries) GetAccountById(ctx context.Context, owner sql.NullInt32) (Account, error) {
+	row := q.db.QueryRowContext(ctx, getAccountById, owner)
+	var i Account
+	err := row.Scan(
+		&i.ID,
+		&i.Balance,
+		&i.Currency,
+		&i.Owner,
+	)
+	return i, err
+}
+
 const updateAccount = `-- name: UpdateAccount :execresult
 UPDATE accounts SET balance = ? WHERE owner = ?
 `

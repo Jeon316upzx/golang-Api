@@ -1,6 +1,7 @@
 package bankdb
 
 import (
+	"bankapi/db/util"
 	"context"
 	"database/sql"
 	"fmt"
@@ -11,8 +12,8 @@ import (
 
 func TestCreateOwnerDetails(t *testing.T) {
 	arg := CreateOwnerDetailsParams{
-		Name: "Ifeanyi",
-		Age:  sql.NullInt32{Int32: 20, Valid: true},
+		Name: util.RandomName(6),
+		Age:  sql.NullInt32{Int32: util.RandomAge(10, 40), Valid: true},
 	}
 
 	result, err := testQueries.CreateOwnerDetails(context.Background(), arg)

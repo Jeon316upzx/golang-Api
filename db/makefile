@@ -29,6 +29,6 @@ sqlc:
 	sqlc generate
 
 gotest:
-	go test -v ./../db/sqlc
+	go test -v -cover ./../db/sqlc
 	
 .PHONY: mysqldb createdb dropdb migrateup migratedown sqlc gotest

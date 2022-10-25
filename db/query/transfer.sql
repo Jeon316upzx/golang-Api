@@ -10,5 +10,5 @@ SELECT * FROM transfer WHERE to_account = ?;
 -- name: GetTransferFrom :many
 SELECT * FROM transfer WHERE from_account = ?;
 
--- name: GetTransfer :execresult
-SELECT * FROM transfer WHERE id = ?;
+-- name: GetTransfer :one
+SELECT * FROM transfer WHERE id = ? LIMIT 1; 

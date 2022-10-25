@@ -24,12 +24,21 @@ func (q *Queries) CreateTransaction(ctx context.Context, arg CreateTransactionPa
 	return q.db.ExecContext(ctx, createTransaction, arg.Type, arg.Amount, arg.Account)
 }
 
-const getTransaction = `-- name: GetTransaction :execresult
+const getTransaction = `-- name: GetTransaction :one
 SELECT id, type, created_at, amount, account FROM transactions WHERE id = ? LIMIT 1
 `
 
-func (q *Queries) GetTransaction(ctx context.Context, id int32) (sql.Result, error) {
-	return q.db.ExecContext(ctx, getTransaction, id)
+func (q *Queries) GetTransaction(ctx context.Context, id int32) (Transaction, error) {
+	row := q.db.QueryRowContext(ctx, getTransaction, id)
+	var i Transaction
+	err := row.Scan(
+		&i.ID,
+		&i.Type,
+		&i.CreatedAt,
+		&i.Amount,
+		&i.Account,
+	)
+	return i, err
 }
 
 const getTransactionBy = `-- name: GetTransactionBy :many
