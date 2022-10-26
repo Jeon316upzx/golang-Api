@@ -31,5 +31,8 @@ jobs:
     - name: clone repository into runner    
       uses: actions/checkout@v3
 
-    - name: Test
-      run:  make gotest
+    - name: Migrations
+      run:  cd ./db && make migrateup
+
+    - name: Run tests
+      run: cd ./db && make gotest
