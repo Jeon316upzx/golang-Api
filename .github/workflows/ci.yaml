@@ -41,7 +41,7 @@ jobs:
     - name: Turn off foreign key checks
       run: |
            sudo /etc/init.d/mysql start
-           mysql --host bankdb -uroot. -pbankapi18 -e "SET foreign_key_checks = 0;"
+           mysql -uroot. -pbankapi18 -e "SET foreign_key_checks = 0;"
 
     - name: Migrations
       run:  cd ./db && make migrateup
