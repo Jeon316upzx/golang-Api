@@ -17,7 +17,7 @@ jobs:
           image: mysql:8
           env:
               MYSQL_DATABASE: bankdb
-              MYSQL_USER: root
+              MYSQL_USER: root.
               MYSQL_PASSWORD: bankapi18
               MYSQL_ROOT_PASSWORD: bankapi18
           ports:
@@ -41,7 +41,7 @@ jobs:
     - name: Turn off foreign key checks
       run: |
            sudo /etc/init.d/mysql start
-           sudo mysql -u root -pbankapi18 -e "SET foreign_key_checks = 0;"
+           mysql -u root. -pbankapi18 -e "SET foreign_key_checks = 0;"
 
     - name: Migrations
       run:  cd ./db && make migrateup
