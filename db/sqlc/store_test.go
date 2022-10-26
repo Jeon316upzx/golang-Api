@@ -55,9 +55,10 @@ func TestTransferTx(t *testing.T) {
 
 	owner1, _ := testQueries.GetAccountById(context.Background(), sql.NullInt32{Int32: int32(accountID1)})
 	owner2, _ := testQueries.GetAccountById(context.Background(), sql.NullInt32{Int32: int32(accountID2)})
-
+	t.Log(owner1)
+	t.Log(owner2)
 	newBal1 := owner1.Balance - amount
-	newBal2 := owner2.Balance - amount
+	newBal2 := owner2.Balance + amount
 
 	ID1 := owner1.ID
 	ID2 := owner2.ID
