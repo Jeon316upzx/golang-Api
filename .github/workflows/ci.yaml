@@ -28,8 +28,14 @@ jobs:
         mysql user: 'root' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
         mysql password: ${{ secrets.DATABASEPASSWORD }}
 
-    - name: clone repository into runner    
+    - name: Clone repository into runner    
       uses: actions/checkout@v3
+    
+    - name: Install Golang-migrate
+      run:  | 
+           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
+           sudo mv migrate /usr/bin/
+           which migrate
 
     - name: Migrations
       run:  cd ./db && make migrateup
