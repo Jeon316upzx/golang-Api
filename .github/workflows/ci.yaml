@@ -38,6 +38,10 @@ jobs:
            sudo mv migrate /usr/bin/
            which migrate
 
+    - name: Turn off foreign key checks
+      run: |
+           mysql -u root -pbankapi18 -e "SET foreign_key_checks = 0;"
+
     - name: Migrations
       run:  cd ./db && make migrateup
 
