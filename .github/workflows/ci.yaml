@@ -37,14 +37,12 @@ jobs:
            curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
            sudo mv migrate /usr/bin/
            which migrate
-
-    - name: Turn off foreign key checks
-      run: |
-           sudo /etc/init.d/mysql start
-           mysql -h 127.0.0.1 --port 5432 -u root -pbankapi18 -e "SET foreign_key_checks = 0;"
-
+           
     - name: Migrations
       run:  cd ./db && make migrateup
 
     - name: Run tests
-      run: cd ./db && make gotest
+      run: |
+            sudo /etc/init.d/mysql start
+            mysql -h 127.0.0.1 --port 5432 -u root -pbankapi18 -e "SET foreign_key_checks = 0;"
+            cd ./db && make gotest
