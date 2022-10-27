@@ -44,5 +44,5 @@ jobs:
     - name: Run tests
       run: |
             sudo /etc/init.d/mysql start
-            mysql -h 127.0.0.1 --port 5432 -u root. -pbankapi18 -e "SET foreign_key_checks = 0;"
+            mysql -h 127.0.0.1 --port 5432 -u root. -pbankapi18 -e "SET GLOBAL FOREIGN_KEY_CHECKS=0;"
             cd ./db && make gotest
