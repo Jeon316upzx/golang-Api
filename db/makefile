@@ -30,5 +30,8 @@ sqlc:
 
 gotest:
 	go test -v -cover ./../db/sqlc
+
+singletest:
+	go test -run TestCreateOwner -cover  ./../db/sqlc
 	
-.PHONY: mysqldb createdb dropdb migrateup migratedown sqlc gotest
+.PHONY: mysqldb createdb dropdb migrateup migratedown sqlc gotest singletest
